@@ -6,6 +6,7 @@ This is a repo for me to learn about benchmarking C++ code using Google benchmar
 
 To compile:
 ```
+git submodule init
 cmake -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo
 cmake --build build
 ```
