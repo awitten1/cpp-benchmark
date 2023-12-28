@@ -5,55 +5,46 @@
 
 #include <benchmark/benchmark.h>
 
-constexpr size_t size = 1'000;
+constexpr size_t ncols = 10'000;
+constexpr size_t nrows = 1'000;
 
 static void experiment_row_order(benchmark::State& state) {
-    state.PauseTiming();
-    auto array = new int[size][size];
-    state.ResumeTiming();
+    auto array = new int[nrows][ncols];
 
     for (auto _ : state) {
-        for (int i = 0; i < size; ++i) {
-            for (int j = 0; j < size; ++j) {
+        for (int i = 0; i < nrows; ++i) {
+            for (int j = 0; j < ncols; ++j) {
                 benchmark::DoNotOptimize(array[i][j]++);
             }
         }
     }
-    state.PauseTiming();
     delete [] array;
 }
 
 static void experiment_column_order(benchmark::State& state) {
-    state.PauseTiming();
-    auto array = new int[size][size];
-    state.ResumeTiming();
+    auto array = new int[nrows][ncols];
 
     for (auto _ : state) {
-        for (int i = 0; i < size; ++i) {
-            for (int j = 0; j < size; ++j) {
-                benchmark::DoNotOptimize(array[j][i]++);
+        for (int j = 0; j < ncols; ++j) {
+            for (int i = 0; i < nrows; ++i) {
+                benchmark::DoNotOptimize(array[i][j]++);
             }
         }
     }
-    state.PauseTiming();
     delete [] array;
 }
 
 static void experiment_random_order(benchmark::State& state) {
-    state.PauseTiming();
-    auto array = new int[size][size];
+    auto array = new int[nrows][ncols];
     srand(0);
 
-    state.ResumeTiming();
-
     for (auto _ : state) {
-        for (int i = 0; i < size; ++i) {
-            for (int j = 0; j < size; ++j) {
-                benchmark::DoNotOptimize(array[i][rand() % size]++);
+        for (int i = 0; i < nrows; ++i) {
+            for (int j = 0; j < ncols; ++j) {
+                benchmark::DoNotOptimize(array[i][rand() % ncols]++);
             }
         }
     }
-    state.PauseTiming();
     delete [] array;
 }
 
