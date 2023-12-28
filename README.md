@@ -6,12 +6,11 @@ This is a repo for me to learn about benchmarking C++ code using Google benchmar
 
 To compile:
 ```
-git submodule init
-cmake -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo
-cmake --build build
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
 ```
 
-To run the 2d array iteration (for example):
+Running
 ```
-./2d-array
+./build/2d-array --benchmark_format=json  | jq '.benchmarks | .[] | {cpu_time: .cpu_time, name: .name}'
 ```

@@ -1,2 +1,0 @@
-set(BENCHMARK_USE_BUNDLED_GTEST OFF)
-add_subdirectory(benchmark)
