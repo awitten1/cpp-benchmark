@@ -12,5 +12,5 @@ cmake --build build --config Release
 
 Running
 ```
-./build/2d-array --benchmark_format=json  | jq '.benchmarks | .[] | {cpu_time: .cpu_time, name: .name}'
+./build/btree_benchmark
 ```
