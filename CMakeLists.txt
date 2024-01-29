@@ -17,14 +17,15 @@ target_link_libraries(2d-array PRIVATE benchmark::benchmark)
 add_executable(btree_benchmark btree_benchmark.cc)
 set_target_properties(btree_benchmark benchmark PROPERTIES CXX_STANDARD 17)
 target_link_libraries(btree_benchmark PUBLIC
-  Boost::container
+  # google benchmark
   benchmark::benchmark
+
+  # boost containers
+  Boost::container
   Boost::unordered
+
+  # abseil containers
   absl::btree
-  absl::base
-  absl::memory
   absl::flat_hash_map
   absl::random_random
-  absl::flat_hash_set
-
 )
