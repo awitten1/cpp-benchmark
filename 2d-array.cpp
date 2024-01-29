@@ -24,7 +24,7 @@ static void deleteArray(int **array, int rows, int cols) {
 
 static void experiment_row_order(benchmark::State& state) {
     int64_t nrows = state.range(0);
-    int64_t ncols = state.range(1);
+    int64_t ncols = state.range(0);
 
     auto array = allocateArray(nrows, ncols);
 
@@ -41,7 +41,7 @@ static void experiment_row_order(benchmark::State& state) {
 
 static void experiment_column_order(benchmark::State& state) {
     int64_t nrows = state.range(0);
-    int64_t ncols = state.range(1);
+    int64_t ncols = state.range(0);
     auto array = allocateArray(nrows, ncols);
 
     for (auto _ : state) {
@@ -57,7 +57,7 @@ static void experiment_column_order(benchmark::State& state) {
 
 static void experiment_random_order(benchmark::State& state) {
     int64_t nrows = state.range(0);
-    int64_t ncols = state.range(1);
+    int64_t ncols = state.range(0);
 
     auto array = allocateArray(nrows, ncols);
     srand(0);
@@ -74,8 +74,7 @@ static void experiment_random_order(benchmark::State& state) {
 
 static void CustomArguments(benchmark::internal::Benchmark* b) {
   for (int nrows : {32,64,128,256,512,1024,2048,8192})
-    for (int ncols : {64,256,512,1024,2048,4096,8192})
-      b->Args({nrows, ncols});
+    b->Arg(nrows);
 }
 
 BENCHMARK(experiment_row_order)->Apply(CustomArguments);
