@@ -11,8 +11,13 @@ include(CPM)
 include(GetDeps)
 
 add_executable(2d-array 2d-array.cpp)
+
 set_target_properties(2d-array benchmark PROPERTIES CXX_STANDARD 17)
 target_link_libraries(2d-array PRIVATE benchmark::benchmark)
+
+add_executable(bounds-checking bounds-checking.cpp)
+set_target_properties(bounds-checking benchmark PROPERTIES CXX_STANDARD 17)
+target_link_libraries(bounds-checking PRIVATE benchmark::benchmark)
 
 add_executable(btree_benchmark btree_benchmark.cc)
 set_target_properties(btree_benchmark benchmark PROPERTIES CXX_STANDARD 17)
