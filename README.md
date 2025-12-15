@@ -10,3 +10,7 @@ To compile:
 cmake -B build -G Ninja
 cmake --build build -j8
 ```
+To run:
+```
+./build/main
+```
