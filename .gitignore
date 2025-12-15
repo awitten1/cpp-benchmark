@@ -1,2 +1,5 @@
 build
 .cache
+build_dir
+source_dir
+install_dir

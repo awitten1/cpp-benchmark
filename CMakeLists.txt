@@ -1,36 +1,15 @@
 
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.24)
 
-project("Benchmarking")
+project(Benchmarking LANGUAGES CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
-include(CPM)
-include(GetDeps)
 
-add_executable(2d-array 2d-array.cpp)
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/install_dir")
 
-set_target_properties(2d-array benchmark PROPERTIES CXX_STANDARD 17)
-target_link_libraries(2d-array PRIVATE benchmark::benchmark)
+find_package(benchmark REQUIRED)
 
-add_executable(bounds-checking bounds-checking.cpp)
-set_target_properties(bounds-checking benchmark PROPERTIES CXX_STANDARD 17)
-target_link_libraries(bounds-checking PRIVATE benchmark::benchmark)
+add_executable(main main.cpp)
 
-add_executable(btree_benchmark btree_benchmark.cc)
-set_target_properties(btree_benchmark benchmark PROPERTIES CXX_STANDARD 17)
-target_link_libraries(btree_benchmark PUBLIC
-  # google benchmark
-  benchmark::benchmark
-
-  # boost containers
-  Boost::container
-  Boost::unordered
-
-  # abseil containers
-  absl::btree
-  absl::flat_hash_map
-  absl::random_random
-)
+target_link_libraries(main PRIVATE benchmark::benchmark)
