@@ -9,3 +9,5 @@ std::vector<long> get_nums(size_t num_elems);
 int warmup_cpu();
 
 long sum(const std::vector<long>& nums);
+
+long omp_sum(const std::vector<long>& nums);

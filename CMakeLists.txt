@@ -16,10 +16,18 @@ add_executable(main main.cpp)
 add_executable(perf_main perf_main.cpp)
 
 set(MARCH "" CACHE STRING "set march flag")
+option(WITH_OPENMP "use openmp" OFF)
+
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O3")
 
 if (NOT MARCH STREQUAL "")
     set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -march=${MARCH}")
+endif()
+
+if (WITH_OPENMP)
+    find_package(OpenMP REQUIRED COMPONENTS CXX)
+    target_compile_definitions(functions PUBLIC WITH_OPENMP)
+    target_link_libraries(functions PUBLIC OpenMP::OpenMP_CXX)
 endif()
 
 target_link_libraries(main PRIVATE functions)

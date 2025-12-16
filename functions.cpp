@@ -1,4 +1,6 @@
 #include "functions.hpp"
+#include <vector>
+#include <omp.h>
 
 std::vector<long> get_nums(size_t num_elems) {
     std::vector<long> ret(num_elems);
@@ -28,3 +30,15 @@ long sum(const std::vector<long>& nums) {
     }
     return ret;
 }
+
+
+long omp_sum(const std::vector<long>& nums) {
+    long total_sum = 0;
+
+    #pragma omp parallel for reduction(+:total_sum)
+    for (size_t i = 0; i < nums.size(); ++i) {
+        total_sum += nums[i];
+    }
+    return total_sum;
+}
+

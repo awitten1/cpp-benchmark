@@ -8,12 +8,12 @@
 #include <iostream>
 
 template<typename Func>
-void RunUnderPerf(Func func) {
+void RunUnderPerf(Func func, std::string output_file) {
     int pid = getpid();
     pid_t cpid = fork();
     if (cpid == 0) {
         char buf[50];
-        sprintf(buf, "perf stat -ddd -p %d > stat.log 2>&1",pid);
+        sprintf(buf, "perf stat -ddd -p %d > %s 2>&1",pid, output_file.c_str());
         execl("/bin/sh", "sh", "-c", buf, NULL);
     }
 
@@ -30,8 +30,12 @@ void RunUnderPerf(Func func) {
 
 int main(int argc, char** argv) {
     auto nums = get_nums(std::stoi(argv[1]));
-    RunUnderPerf([nums = std::move(nums)]() {
+    RunUnderPerf([&nums]() {
         volatile long x = sum(nums);
-    });
+    }, "stat.1.log");
+
+    RunUnderPerf([&nums]() {
+        volatile long x = omp_sum(nums);
+    }, "stat.2.log");
     return 0;
 }
