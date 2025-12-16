@@ -10,7 +10,18 @@ list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/install_dir")
 
 find_package(benchmark REQUIRED)
 
+add_library(functions functions.cpp)
+
 add_executable(main main.cpp)
 add_executable(perf_main perf_main.cpp)
 
+set(MARCH "" CACHE STRING "set march flag")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O3")
+
+if (NOT MARCH STREQUAL "")
+    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -march=${MARCH}")
+endif()
+
+target_link_libraries(main PRIVATE functions)
+target_link_libraries(perf_main PRIVATE functions)
 target_link_libraries(main PRIVATE benchmark::benchmark)
