@@ -1,4 +1,5 @@
 #include "functions.hpp"
+#include <cstddef>
 #include <vector>
 #include <omp.h>
 
@@ -40,5 +41,31 @@ long omp_sum(const std::vector<long>& nums) {
         total_sum += nums[i];
     }
     return total_sum;
+}
+
+
+
+size_t binary_search(const std::vector<long>& vec, long target) {
+    size_t low = 0, high = vec.size();
+
+    while (low < high) {
+        size_t mid = low + (high - low)/2;
+        if (vec[mid] < target) {
+            low = mid + 1;
+        } else {
+            high = mid;
+        }
+    }
+    return low;
+}
+
+size_t linear_search(const std::vector<long>& vec, long target) {
+    size_t idx = 0;
+    for (; idx < vec.size(); ++idx) {
+        if (vec[idx] >= target) {
+            break;
+        }
+    }
+    return idx;
 }
 
