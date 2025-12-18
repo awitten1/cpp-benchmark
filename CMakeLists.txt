@@ -10,6 +10,8 @@ list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/install_dir")
 
 find_package(benchmark REQUIRED)
 
+set(CMAKE_CXX_STANDARD 17)
+
 add_library(functions functions.cpp)
 
 add_executable(main main.cpp)
